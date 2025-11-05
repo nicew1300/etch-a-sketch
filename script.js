@@ -66,24 +66,39 @@ function getGridSize() {
 
 function makeGrid() {
     containerDiv.innerHTML = ""
-    let size = getGridSize()
+    size = getGridSize()
     for (let i = 0; i < size * size; i++) {
     let square = document.createElement("div")
     square.classList.add("square")
+
+    // dynamic square size changes
     let squareSize = 640 / size;
     square.style.width = `${squareSize}px`;
     square.style.height = `${squareSize}px`;
+
     containerDiv.appendChild(square)
-}
+    }
 }
 
-function reset() {
-    let square = document.querySelectorAll(".square")
-    square.innerHTML = ""
-    square.forEach(square => {
-    square.style.backgroundColor = "";
-    square.style.opacity = 1;
-    })
+function reset(lastGridSize = size) {
+    containerDiv.innerHTML = ""
+    for (let i = 0; i < lastGridSize * lastGridSize; i++) {
+    let square = document.createElement("div")
+    square.classList.add("square")
+
+    // dynamic square size changes
+    let squareSize = 640 / size;
+    square.style.width = `${squareSize}px`;
+    square.style.height = `${squareSize}px`;
+
+    containerDiv.appendChild(square)
+    }
+    // let square = document.querySelectorAll(".square")
+    // square.innerHTML = ""
+    // square.forEach(square => {
+    // square.style.backgroundColor = "";
+    // square.style.opacity = 1;
+    // })
 }
 
 // assign class on buttons
