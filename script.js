@@ -23,7 +23,7 @@ function rainbow() {
     })
 }
 
-function myProgressive() {
+function progressive() {
     let square = document.querySelectorAll(".square")
     square.forEach(square => {
         // opacity is only set if it’s missing
@@ -72,6 +72,9 @@ function makeGrid() {
     for (let i = 0; i < size * size; i++) {
     let square = document.createElement("div")
     square.classList.add("square")
+    let squareSize = 640 / size;
+    square.style.width = `${squareSize}px`;
+    square.style.height = `${squareSize}px`;
     containerDiv.appendChild(square)
 }
 }
