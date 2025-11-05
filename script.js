@@ -1,13 +1,11 @@
 let containerDiv = document.querySelector("#cont")
-
-function black() {
-    let square = document.querySelectorAll(".square")
-    square.forEach(square => {
-        square.addEventListener("mouseover", (event) => {
-        event.target.style.backgroundColor = "black";
-    });
-    })
-}
+let isDrawing = false
+// disable the browser "image" dragging
+document.addEventListener("mousedown", (e) => {
+    e.preventDefault(); // stops browser drag behavior
+    isDrawing = true;
+});
+document.addEventListener("mouseup", () => isDrawing = false);
 
 function getRandomRGB() {
     let threeRGB = `rgb(${Math.floor(Math.random() * (255 - 0 + 1)) + 0}, ${Math.floor(Math.random() * (255 - 0 + 1)) + 0}, ${Math.floor(Math.random() * (255 - 0 + 1)) + 0})`
@@ -16,46 +14,46 @@ function getRandomRGB() {
 
 function rainbow() {
     let square = document.querySelectorAll(".square")
+    document.addEventListener("mousedown", () => isDrawing = true);
+    document.addEventListener("mouseup", () => isDrawing = false);
     square.forEach(square => {
         square.addEventListener("mouseover", (event) => {
+        if (!isDrawing) return
         event.target.style.backgroundColor = getRandomRGB();
+    });
+    })
+}
+
+function black() {
+    let square = document.querySelectorAll(".square")
+    document.addEventListener("mousedown", () => isDrawing = true);
+    document.addEventListener("mouseup", () => isDrawing = false);
+    square.forEach(square => {
+        square.addEventListener("mouseover", (event) => {
+        if (!isDrawing) return
+        event.target.style.backgroundColor = "black";
     });
     })
 }
 
 function progressive() {
     let square = document.querySelectorAll(".square")
+    document.addEventListener("mousedown", () => isDrawing = true);
+    document.addEventListener("mouseup", () => isDrawing = false);
     square.forEach(square => {
         // opacity is only set if it’s missing
-        if (!square.style.opacity) {
+        if (square.style.opacity === "" || square.style.opacity === undefined) {
             square.style.opacity = 0;
             square.style.backgroundColor = "black";
         }
 
         square.onmouseover = (event) => {
-        currentOpacity = parseFloat(event.target.style.opacity) || 0
+        if (!isDrawing) return;
+        let currentOpacity = parseFloat(event.target.style.opacity) || 0
         let newOpacity = currentOpacity + 0.1
         event.target.style.opacity = newOpacity
     }});
 }
-
-
-// function progressive() {
-//     let squares = document.querySelectorAll(".square");
-
-//     squares.forEach(square => {
-//         // reset stored opacity if missing
-//         if (!square.dataset.opacity) square.dataset.opacity = 0;
-
-//         // remove any previous event listener by replacing with a fresh one
-//         square.onmouseover = (event) => {
-//             let currentOpacity = parseFloat(event.target.dataset.opacity);
-//             let newOpacity = Math.min(currentOpacity + 0.1, 1);
-//             event.target.dataset.opacity = newOpacity;
-//             event.target.style.backgroundColor = `rgba(0, 0, 0, ${newOpacity})`;
-//         };
-//     });
-// }
 
 function getGridSize() {
     let size = parseFloat(prompt("Number of squares per side for the grid? (number between 0 and 100)"))
@@ -81,8 +79,9 @@ function makeGrid() {
 
 function reset() {
     let square = document.querySelectorAll(".square")
+    square.innerHTML = ""
     square.forEach(square => {
-    square.style.backgroundColor = "white";
+    square.style.backgroundColor = "";
     square.style.opacity = 1;
     })
 }
