@@ -1,7 +1,7 @@
 let containerDiv = document.querySelector("#cont")
 
 function black() {
-    let square = document.querySelectorAll(".square");
+    let square = document.querySelectorAll(".square")
     square.forEach(square => {
         square.addEventListener("mouseover", (event) => {
         event.target.style.backgroundColor = "black";
@@ -15,10 +15,22 @@ function getRandomRGB() {
 }
 
 function rainbow() {
-    let square = document.querySelectorAll(".square");
+    let square = document.querySelectorAll(".square")
     square.forEach(square => {
         square.addEventListener("mouseover", (event) => {
         event.target.style.backgroundColor = getRandomRGB();
+    });
+    })
+}
+
+function progressive() {
+    let square = document.querySelectorAll(".square")
+    square.forEach(square => {
+        square.style.opacity = 0;
+        square.addEventListener("mouseover", (event) => {
+        let currentOpacity = parseFloat(event.target.style.opacity)
+        let newOpacity = currentOpacity + 0.1
+        event.target.style.opacity = newOpacity;
     });
     })
 }
@@ -42,6 +54,11 @@ function makeGrid() {
 }
 }
 
+function reset() {
+    let square = document.querySelectorAll(".square")
+    square.forEach(square => {
+    square.style.backgroundColor = "white";})
+}
 
 // assign class on buttons
 let buttons = Array.from(document.querySelectorAll("button"))
